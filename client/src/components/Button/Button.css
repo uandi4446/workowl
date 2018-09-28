@@ -1,0 +1,13 @@
+.PrimaryButton.btn.btn-primary {
+    background: #F26101 none repeat scroll 0 0;
+    border-color: #F26101;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.NormalButton.btn.btn-primary {
+    background: #304269 none repeat scroll 0 0;
+    border-color: #304269;
+    color: #ffffff;
+    font-size: 16px;
+}

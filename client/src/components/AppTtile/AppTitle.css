@@ -1,0 +1,24 @@
+.Login-title {
+    margin: 10px auto 10px;
+    text-align: center;
+    max-width: 45%;
+}
+
+.Forgot-title {
+    margin: 10px auto 10px;
+    text-align: center;
+    max-width: 45%;
+}
+
+.Register-title {
+    margin: 0 auto 0;
+    text-align: center;
+    max-width: 45%;
+}
+
+.Header-title {
+    color: black;
+    font-size: 30px;
+    float: left;
+    max-width: 20%;
+}

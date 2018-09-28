@@ -1,0 +1,11 @@
+version: '3'
+services:
+  workowl:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api/:/home/app/workowl/api
+      - ./client:/home/app/workowl/client
+      - /home/app/workowl/api/node_modules
+      - /home/app/workowl/client/node_modules

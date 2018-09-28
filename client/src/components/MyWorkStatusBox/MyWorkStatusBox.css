@@ -1,0 +1,58 @@
+.MyWorkStatusBox {
+    background: #ffffff none repeat scroll 0 0;
+    border-radius: 2px;
+    margin: 20px auto 20px;
+    max-width: 80%;
+    text-align: center;
+    padding: 20px;
+}
+
+.MyWorkStatus.left {
+    float: left;
+}
+
+.MyWorkStatus.right {
+    float: right;
+}
+
+.MyWorkStatus.center {
+    display: inline-block;
+}
+
+.MyWorkStatus-row {
+    margin-left: 0px;
+    margin-right: 0px;
+    min-height: 50px;
+    margin-top: 30px;
+}
+
+.MyWorkStatus-hour {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 10px;
+    min-height: 20px;
+}
+
+.MyWorkStatus-plan.left {
+    float: left;
+    color: darkgray;
+}
+
+.MyWorkStatus-plan.right {
+    float: right;
+    color: darkgray;
+}
+
+.MyWorkStatus-work.left {
+    float: left;
+    color: #F26101;
+}
+
+.MyWorkStatus-work.right {
+    float: right;
+    color: #F26101;
+}
+
+.MyWorkStatusBox .progress-bar.progress-bar-striped.bg-info {
+    background-color: #F26101 !important;
+}

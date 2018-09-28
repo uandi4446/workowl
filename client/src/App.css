@@ -1,0 +1,21 @@
+.App {
+  text-align: center;
+  margin: 0 auto;
+  width: 900px;
+  min-height: 700px;
+  background-color: #D9E8F5;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

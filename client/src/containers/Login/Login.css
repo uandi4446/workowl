@@ -1,0 +1,59 @@
+.Login {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.Login-img {
+    background-image: url('../../lib/images/login_background.jpg');
+    z-index: 1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    position: fixed;
+    width: 900px;
+    height: 700px;
+}
+
+.Login-content {
+    background: rgba(65, 63, 63, 0.35);
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgb(0, 0, 0.25);
+    top: 10px;
+    position: relative;
+    z-index: 9999;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 0 10px;
+    width: 850px;
+    height: 680px;
+}
+
+.Login-panel {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.Forgot-panel {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.Register-panel {
+    text-align: center;
+}
+
+.Login-box {
+    background-color: white;
+    width: 300px;
+    text-align: center;
+    display: inline-block;
+    margin-top: 50px;
+}
+
+.Login-link {
+    margin-top: 15px;
+}
+.Login-link a {
+    font-size: 16px;
+    text-decoration: underline;
+    color: darkblue;
+}

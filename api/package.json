@@ -1,0 +1,31 @@
+{
+  "name": "workowl-api",
+  "version": "0.1.0",
+  "description": "Api server for workowl service.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:client\"",
+    "dev:api": "nodemon ./bin/www",
+    "dev:client": "node ./bin/start-client.js"
+  },
+  "keywords": [
+    "workowl"
+  ],
+  "author": "uandi4446@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.6.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0"
+  },
+  "dependencies": {
+    "debug": "^4.0.1",
+    "koa": "^2.5.3",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0"
+  }
+}
