@@ -6,8 +6,11 @@
 */
 import React, { Component } from 'react';
 
+import './Home.css';
+
 import Header from '../../components/Header';
 import MyWorkStatusBox from '../../components/MyWorkStatusBox';
+import TeamMemberWorkStatusBox from '../../components/TeamMemberWorkStatusBox';
 
 class Home extends Component {
     render() {
@@ -16,6 +19,11 @@ class Home extends Component {
             <Header />
             <div className="container">
               <MyWorkStatusBox />
+              <div className="Home-memberRow">
+                <TeamMemberWorkStatusBox />
+                <TeamMemberWorkStatusBox />
+                <TeamMemberWorkStatusBox />
+              </div>
             </div>
           </div>
         )
