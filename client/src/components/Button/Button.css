@@ -11,3 +11,10 @@
     color: #ffffff;
     font-size: 16px;
 }
+
+.RelaxButton.btn.btn-primary {
+    background: #103FD7 none repeat scroll 0 0;
+    border-color: #103FD7;
+    color: #ffffff;
+    font-size: 16px;
+}

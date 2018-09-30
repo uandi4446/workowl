@@ -1,0 +1,47 @@
+.StatusIcon {
+    display: inline-block;
+    border-radius: 50%;
+    background-image: url(../../lib/images/owl_icon_white.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    margin: 10px 10px 10px 10px;
+    vertical-align: middle;
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 16px rgb(221, 221, 221);
+}
+
+.StatusIcon.notWork {
+    background-color: #F26101;
+}
+
+.StatusIcon.work {
+    background-color: #1BA23B;
+}
+
+.StatusIcon.outside {
+    background-color: #304269;
+}
+
+.StatusIcon.finish {
+    background-color: #103FD7;
+}
+
+.StatusIcon.holiday {
+    background-color: #FFD800;
+}
+
+.StatusIcon.small {
+    width: 30px;
+    height: 30px;
+}
+
+.StatusIcon.middle {
+    width: 50px;
+    height: 50px;
+}
+
+.StatusIcon.large {
+    width: 100px;
+    height: 100px;
+}

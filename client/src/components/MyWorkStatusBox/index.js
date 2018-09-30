@@ -1,6 +1,7 @@
 /*
 * 사용자의 출퇴근 상황과 근무 현황을 알려주는 Component
 * 현재 상태에 대한 안내 메시지 : 출근 전. 일하는 중. 퇴근 처리. 외근. 휴가. 반차?
+* notWork / work / finish / outside / holiday
 * 퇴근 까지 남은 시간 & 프로그레스 바
 * 출근 처리 버튼
 * 퇴근 처리 버튼
@@ -15,6 +16,8 @@ import './MyWorkStatusBox.css';
 
 import PrimaryButton from '../Button/PrimaryButton.js';
 import NormalButton from '../Button/NormalButton.js';
+import RelaxButton from '../Button/RelaxButton.js';
+import StatusIcon from '../StatusIcon';
 
 class MyWorkStatusBox extends Component {
     setStatus() {
@@ -41,6 +44,10 @@ class MyWorkStatusBox extends Component {
 
         return (
             <div className="MyWorkStatusBox">
+                <div className="textleft">
+                    <StatusIcon status={this.props.status} size="small"/>
+                    <div className="MyWorkStatusBox-name">{this.props.name}님</div>
+                </div>
                 <h2>{status}</h2>
                 <div className="MyWorkStatus-row">
                     <div className="MyWorkStatus left">
@@ -50,7 +57,7 @@ class MyWorkStatusBox extends Component {
                         <NormalButton title="외근" />
                     </div>
                     <div className="MyWorkStatus right">
-                        <PrimaryButton title="퇴근" disabled={endBtn} />
+                        <RelaxButton title="퇴근" disabled={endBtn} />
                     </div>
                 </div>
                 <div className="progress">
@@ -82,7 +89,8 @@ MyWorkStatusBox.defaultProps = {
     planStart: '09:00',
     planEnd: '18:00',
     workStart: '09:00',
-    workEnd: '18:00'
+    workEnd: '18:00',
+    name: '문혜선'
 };
 
 export default MyWorkStatusBox;

@@ -56,3 +56,14 @@
 .MyWorkStatusBox .progress-bar.progress-bar-striped.bg-info {
     background-color: #F26101 !important;
 }
+
+.MyWorkStatusBox-name {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 10px 0px 10px 0px;
+    font-size: 20px;
+}
+
+.MyWorkStatusBox .textleft {
+    text-align: left;
+}

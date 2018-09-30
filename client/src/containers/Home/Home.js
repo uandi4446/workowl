@@ -11,6 +11,7 @@ import './Home.css';
 import Header from '../../components/Header';
 import MyWorkStatusBox from '../../components/MyWorkStatusBox';
 import TeamMemberWorkStatusBox from '../../components/TeamMemberWorkStatusBox';
+import WorkStatusExplainBox from 'components/WorkStatusExplainBox';
 
 class Home extends Component {
     render() {
@@ -19,6 +20,7 @@ class Home extends Component {
             <Header />
             <div className="container">
               <MyWorkStatusBox />
+              <WorkStatusExplainBox />
               <div className="Home-memberRow">
                 <TeamMemberWorkStatusBox />
                 <TeamMemberWorkStatusBox />

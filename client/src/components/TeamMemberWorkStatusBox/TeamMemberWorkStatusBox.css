@@ -1,9 +1,17 @@
 .TeamMemberWorkStatusBox {
-    background: #ffffff none repeat scroll 0 0;
+    background: #011640 none repeat scroll 0 0;
+    color: white;
     border-radius: 2px;
     margin: 20px 10px 0px 20px;
     min-width: 25%;
     text-align: center;
     padding: 20px;
     display: inline-block;
+}
+
+.TeamMemberWorkStatusBox-text {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 10px 0 10px 0;
+    font-size: 15px;
 }

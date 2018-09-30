@@ -3,3 +3,19 @@
     height: 150px;
     padding: 20px;
  }
+
+ .Header-nav {
+     float: right;
+     color: white;
+     font-size: 20px;
+     vertical-align: bottom;
+     padding-top: 10%
+ }
+
+ .Header-nav li {
+     padding-right: 10px;
+ }
+
+ .Header-nav li a {
+     color: white;
+ }
