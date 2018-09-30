@@ -6,7 +6,7 @@ const Router = require('koa-router');
 const app = new Koa();
 const router = new Router();
 
-router.get('/api/hello', (ctx, next) => {
+router.get('/api/*', (ctx, next) => {
   ctx.body = { res: 'Hello React! I\'m api' };
 });
 

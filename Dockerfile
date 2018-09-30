@@ -7,6 +7,7 @@ ENV HOME=/home/app
 RUN npm install -g eslint
 RUN npm install -g nodemon
 RUN npm install -g concurrently
+RUN npm install -g plop
 
 RUN mkdir $HOME/workowl
 RUN mkdir $HOME/workowl/api

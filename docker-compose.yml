@@ -2,6 +2,7 @@ version: '3'
 services:
   workowl:
     build: .
+    restart: always
     ports:
       - "3000:3000"
     volumes:
@@ -9,3 +10,12 @@ services:
       - ./client:/home/app/workowl/client
       - /home/app/workowl/api/node_modules
       - /home/app/workowl/client/node_modules
+    links:
+      - db
+  db:
+    image: mariadb:10.3
+    restart: always
+    env_file:
+      - ./db.env
+    volumes:
+      - ./mariadb/data:/var/lib/mysql

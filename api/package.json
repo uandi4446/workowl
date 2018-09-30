@@ -7,7 +7,9 @@
     "start": "node ./bin/www",
     "dev": "concurrently \"npm run dev:api\" \"npm run dev:client\"",
     "dev:api": "nodemon ./bin/www",
-    "dev:client": "node ./bin/start-client.js"
+    "dev:client": "node ./bin/start-client.js",
+    "deploy:db": "node ./scripts/buildDB.js",
+    "deploy:manager": "plop --plopfile ./scripts/generateManager.js"
   },
   "keywords": [
     "workowl"
@@ -23,9 +25,14 @@
     "eslint-plugin-standard": "^4.0.0"
   },
   "dependencies": {
+    "bluebird": "^3.5.2",
     "debug": "^4.0.1",
+    "dotenv": "^6.0.0",
     "koa": "^2.5.3",
     "koa-router": "^7.4.0",
-    "koa-static": "^5.0.0"
+    "koa-static": "^5.0.0",
+    "mysql2": "^1.6.1",
+    "plop": "^2.1.0",
+    "sequelize": "^4.39.0"
   }
 }
