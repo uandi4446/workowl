@@ -16,6 +16,20 @@ import TeamMemberWorkStatusBox from '../../components/TeamMemberWorkStatusBox';
 import WorkStatusExplainBox from '../../components/WorkStatusExplainBox';
 
 class Home extends Component {
+  setWorkStatus() {
+    if (this.props.workEnd) {
+      return 'finish';
+    } else if (this.props.isOutside) {
+      return 'outside';
+    } else if (this.props.workStart) {
+      return 'work';
+    } else if (this.props.isHoliday) {
+      return 'holiday';
+    } else {
+      return 'notWork';
+    }
+  }
+
     handleSubmit(event) {
       switch (event) {
         case 'start':
@@ -27,11 +41,14 @@ class Home extends Component {
     }
 
     render() {
+        let workStatus = this.setWorkStatus();
+
         return (
           <div>
             <Header />
             <div className="container">
               <MyWorkStatusBox
+                status={workStatus}
                 workStart={this.props.start}
                 onSubmit={this.handleSubmit.bind(this)}
               />
