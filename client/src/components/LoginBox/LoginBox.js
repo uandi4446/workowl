@@ -6,7 +6,7 @@ import PrimaryButton from '../Button/PrimaryButton.js';
 class LoginBox extends Component {
     state = {
         id: '',
-        password: ''
+        pwd: ''
     }
 
     handleChange(event) {
@@ -15,9 +15,9 @@ class LoginBox extends Component {
         });
     }
 
-    handleSubmit(event) {
+    onSubmit(event) {
         alert('Login');
-        console.log(this.state);
+        this.props.onSubmit(this.state);
         event.preventDefault();
     }
 
@@ -33,9 +33,9 @@ class LoginBox extends Component {
                         <input type="text" className="form-control" name="id" placeholder="ID" onChange={this.handleChange.bind(this)} />
                     </div>
                     <div className="form-group">
-                        <input type="password" className="form-control" name="password" placeholder="Password" onChange={this.handleChange.bind(this)} />
+                        <input type="password" className="form-control" name="pwd" placeholder="Password" onChange={this.handleChange.bind(this)} />
                     </div>
-                    <PrimaryButton type="submit" title="Login" onClick={this.handleSubmit.bind(this)} />
+                    <PrimaryButton type="submit" title="Login" onClick={this.onSubmit.bind(this)} />
                 </form>
             </div>
         );

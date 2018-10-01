@@ -1,21 +1,22 @@
-const path = require('path');
-
 const Koa = require('koa');
+const bodyParser = require('koa-bodyparser');
+
+// const router = require('./route.js');
 const Router = require('koa-router');
+const router = new Router();
+const { isHasToken } = require('./commons/Auth.js');
 
 const app = new Koa();
-const router = new Router();
 
-router.get('/api/*', (ctx, next) => {
-  ctx.body = { res: 'Hello React! I\'m api' };
+// app.use(isHasToken);
+app.use(bodyParser());
+// app.use(router.routes()).use(router.allowedMethods());
+router.post('/api/users', async (ctx,next) => {
+  await next();
+  ctx.body = 'hello world';
+  console.log(ctx.status);
 });
 
-app.use(router.routes());
-
-app.use(function(err, req, res, next) {
-  console.log(err);
-  res.status(err.status || 500)
-  .json(err.status? err:'Error');
-});
+app.use(router.routes()).use(router.allowedMethods());
 
 module.exports = app;

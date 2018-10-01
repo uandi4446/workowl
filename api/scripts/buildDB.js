@@ -3,7 +3,6 @@
 * DB 생성 및 기본 데이터 삽입을 위한 스크립트
 */
 const Promise = require('bluebird');
-const { oInstance } = require('../commons/Connection.js');
 const ObjectModels = require('../commons/ObjectModels.js');
 
 const syncDB = () => {

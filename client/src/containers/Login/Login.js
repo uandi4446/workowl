@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as loginActions from '../../store/modules/login.js';
 
 import './Login.css';
 import AppTitle from '../../components/AppTtile';
@@ -33,11 +35,11 @@ class Login extends Component {
     setBoxContent() {
         switch (this.state.content) {
             case 'Login':
-                return <LoginBox />;
+                return <LoginBox onSubmit={this.handleLogin.bind(this)}/>;
             case 'Forgot':
                 return <ResetPwdBox />;
             case 'Register':
-                return <RegisterBox />;
+                return <RegisterBox onSubmit={this.handleRegister.bind(this)}/>;
             default:
                 return null;
         }
@@ -57,9 +59,27 @@ class Login extends Component {
         }
     }
 
+    // handle actions
+    handleLogin(user) {
+        console.log(user);
+        this.props.getAuth(user.id, user.pwd);
+    }
+    handleRegister(user) {
+        this.props.createUser({
+            id: user.id,
+            pwd: user.pwd,
+            name: user.name
+        });
+    }
+
     render() {
         let boxContent = this.setBoxContent();
         let commentContent = this.setCommentContent();
+        if (!this.props.loading) {
+        } else if (this.state.content !== 'Login') {
+            this.props.setLogin();
+            return <Redirect to='/login' />
+        }
 
         return (
             <div className="Login">
@@ -76,6 +96,19 @@ class Login extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    loading: state.login.get('loading'),
+    error: state.login.get('error')
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    getAuth: (user) => dispatch(loginActions.getAuth(user)),
+    createUser: (user) => dispatch(loginActions.createUser(user)),
+    setLogin: () => dispatch(loginActions.setLogin())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
 const Forgot = () => {
     return (
         <div className="Login-link">
@@ -91,5 +124,3 @@ const Register = () => {
         </div>
     );
 }
-
-export default Login;

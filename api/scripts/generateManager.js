@@ -1,9 +1,6 @@
-const { oInstance } = require('../commons/Connection.js');
 const ObjectModels = require('../commons/ObjectModels.js');
 
 module.exports = (plop) => {
-    var manager = {};
-
     plop.setActionType('insert', (answers, config, plop) => {
         console.log(answers);
         const { User } = ObjectModels;

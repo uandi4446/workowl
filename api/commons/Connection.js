@@ -1,8 +1,9 @@
 const ORM = require('sequelize');
+ORM.Promise = require('bluebird');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
-const oInstance = new ORM('Workowl', process.env.DB_USER, process.env.DB_PASSWORD, {
+const oInstance = new ORM(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
     host: process.env.DB_HOST,
     dialect: 'mysql',
     pool: {

@@ -11,7 +11,7 @@ import './Home.css';
 import Header from '../../components/Header';
 import MyWorkStatusBox from '../../components/MyWorkStatusBox';
 import TeamMemberWorkStatusBox from '../../components/TeamMemberWorkStatusBox';
-import WorkStatusExplainBox from 'components/WorkStatusExplainBox';
+import WorkStatusExplainBox from '../../components/WorkStatusExplainBox';
 
 class Home extends Component {
     render() {
