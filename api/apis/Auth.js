@@ -20,18 +20,21 @@ module.exports = {
                         .digest('hex')
                         .toUpperCase();
 
-            const user = await User.findOne({
+            const userData = await User.findOne({
                 where: {
-                    id: id,
-                    pwd: pwd
+                    identity: id,
                 }
             });
-
-            if (!user) {
+            if (!userData) {
                 IO.error(ctx, Errors.BADREQUEST);
-            } else {
-                const token = await Auth.signToken({ userId: user.id });
+            } else if (userData.password === pwd) {
+                const token = await Auth.signToken({ 
+                    userId: userData.id,
+                    name: userData.name
+                });
                 IO.send(ctx, { token: token });
+            } else {
+                IO.error(ctx, Errors.BADREQUEST);
             }
         }
     }

@@ -19,8 +19,6 @@ COPY client/package.json client/package-lock.json $HOME/workowl/client/
 RUN chown -R app:app $HOME/*
 RUN chown -R app:app ~/.npm
 RUN chown -R app:app ~/.config
-RUN chown -R app:app ~/api/.config
-RUN chown -R app:app ~/client/.config
 
 USER app
 

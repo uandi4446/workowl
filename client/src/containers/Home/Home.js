@@ -5,6 +5,8 @@
 * 팀원들의 현재 근무 상태 확인 : 근무 중. 외근. 근무 중 아님.
 */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as homeActions from '../../store/modules/home.js';
 
 import './Home.css';
 
@@ -14,12 +16,25 @@ import TeamMemberWorkStatusBox from '../../components/TeamMemberWorkStatusBox';
 import WorkStatusExplainBox from '../../components/WorkStatusExplainBox';
 
 class Home extends Component {
+    handleSubmit(event) {
+      switch (event) {
+        case 'start':
+          this.props.workStart();
+          break;
+        default:
+          break;
+      }
+    }
+
     render() {
         return (
           <div>
             <Header />
             <div className="container">
-              <MyWorkStatusBox />
+              <MyWorkStatusBox
+                workStart={this.props.start}
+                onSubmit={this.handleSubmit.bind(this)}
+              />
               <WorkStatusExplainBox />
               <div className="Home-memberRow">
                 <TeamMemberWorkStatusBox />
@@ -32,4 +47,19 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+  loading: state.home.get('loading'),
+  error: state.home.get('error'),
+  start: state.home.getIn(['schedule', 'start']),
+  end: state.home.getIn(['schedule', 'end']),
+  isOutside: state.home.getIn(['schedule', 'isOutside']),
+  isHoliday: state.home.getIn(['schedule', 'isHoliday']),
+  isPlan: state.home.getIn(['schedule', 'isPlan'])
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  workStart: () => dispatch(homeActions.createStart()),
+  setHome: () => dispatch(homeActions.setHome())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

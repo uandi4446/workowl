@@ -6,7 +6,7 @@ const parseJSON = (response) => {
 
 const checkStatus = (response) => {
     if (response.status >= 200 && response.status < 300) {
-        return response;
+        return response.data;
     }
 
     const error = new Error(response.statusText);
@@ -14,6 +14,15 @@ const checkStatus = (response) => {
 }
 
 export default async (url, options) => {
+    console.log(localStorage.getItem('access-token'));
+    if (localStorage.getItem('access-token')) {
+        console.log("access-token");
+        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access-token')}`;
+    }
+
+    axios.defaults.headers.post['Accept'] = 'application/json';
+    axios.defaults.headers.post['Content-Type'] = 'application/json';
+    
     try {
         let response = await axios(url, options);
         return checkStatus(response);

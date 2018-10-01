@@ -37,6 +37,12 @@ class MyWorkStatusBox extends Component {
         }
     }
 
+    // handle button click
+    onStartSubmit(event) {
+        this.props.onSubmit('start');
+        event.preventDefault();
+    }
+
     render() {
         let status = this.setStatus();
         let startBtn = this.props.status === 'notWork'? false:true;
@@ -51,7 +57,11 @@ class MyWorkStatusBox extends Component {
                 <h2>{status}</h2>
                 <div className="MyWorkStatus-row">
                     <div className="MyWorkStatus left">
-                        <PrimaryButton title="출근" disabled={startBtn} />
+                        <PrimaryButton title="출근" 
+                            name="start"
+                            disabled={startBtn} 
+                            onClick={this.onStartSubmit.bind(this)}
+                        />
                     </div>
                     <div className="MyWorkStatus center">
                         <NormalButton title="외근" />

@@ -3,7 +3,7 @@ var IO = {}
 IO.send = (ctx, data) => {
     var body = {};
     if (!!data) {
-        body.data = data;
+        body = data;
     }
 
     ctx.status = 200;

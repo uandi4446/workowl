@@ -7,7 +7,7 @@ import { fromJS } from 'immutable';
 // constants 정의
 export const GET_AUTH = 'login/GET_AUTH';
 export const CREATE_USER = 'login/CREATE_USER';
-export const CREATE_USER_SUCCESS = 'login/CREATE_USER_SUCCESS';
+export const REQUEST_SUCCESS = 'login/REQUEST_SUCCESS';
 export const SET_ERROR = 'login/SET_ERROR';
 
 export const setLogin = () => {
@@ -30,9 +30,9 @@ export const createUser = (user) => {
     }
 }
 
-export const createUserSuccess = () => {
+export const requestSuccess = () => {
     return {
-        type: CREATE_USER_SUCCESS
+        type: REQUEST_SUCCESS
     }
 }
 
@@ -75,7 +75,7 @@ export default function loginReducer (state = initialState, action) {
                 .setIn(['user', 'id'], action.user.id)
                 .setIn(['user', 'pwd'], action.user.pwd)
                 .setIn(['user', 'name'], action.user.name);
-        case CREATE_USER_SUCCESS:
+        case REQUEST_SUCCESS:
             return state
                 .set('loading', true);
         case SET_ERROR:

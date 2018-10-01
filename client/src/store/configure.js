@@ -9,10 +9,12 @@ const configure = () => {
     const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
     const sagaMiddleware = createSagaMiddleware();
+
+    const middlware = [sagaMiddleware];
     const store = createStore(
         modules,
         compose(
-            applyMiddleware(sagaMiddleware),
+            applyMiddleware(...middlware),
             devTools
         )
     );

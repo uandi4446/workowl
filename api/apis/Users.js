@@ -12,6 +12,7 @@ module.exports = {
             const { User } = ObjectModels;
 
             const user = ctx.request.body;
+            console.log(ctx.request);
             if (!!!user.id || !!!user.pwd || !!!user.name) {
                 ctx.throw(400, Errors.BADREQUEST);
             }

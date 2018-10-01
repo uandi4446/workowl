@@ -62,7 +62,7 @@ class Login extends Component {
     // handle actions
     handleLogin(user) {
         console.log(user);
-        this.props.getAuth(user.id, user.pwd);
+        this.props.getAuth(user);
     }
     handleRegister(user) {
         this.props.createUser({
@@ -79,6 +79,8 @@ class Login extends Component {
         } else if (this.state.content !== 'Login') {
             this.props.setLogin();
             return <Redirect to='/login' />
+        } else {
+            return <Redirect to='/' />
         }
 
         return (
