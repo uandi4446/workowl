@@ -27,6 +27,10 @@ const User = oInstance.define('user', {
 });
 
 const Schedule = oInstance.define('schedule', {
+    date: {
+        type: ORM.DATEONLY,
+        allowNull: false
+    },
     start: {
         type: ORM.DATE,
     },

@@ -8,6 +8,7 @@
     "dev": "concurrently \"npm run dev:api\" \"npm run dev:client\"",
     "dev:api": "nodemon ./bin/www",
     "dev:client": "node ./bin/start-client.js",
+    "destory db": "node ./scripts/destroyDB.js",
     "deploy:db": "node ./scripts/buildDB.js",
     "deploy:manager": "plop --plopfile ./scripts/generateManager.js"
   },
