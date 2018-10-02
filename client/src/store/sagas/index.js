@@ -27,14 +27,13 @@ function* getAuth(action) {
 }
 
 function* createUser(action) {
-  console.log(action.user);
   try {
     const res = yield call(request, '/api/users', {
       method: 'POST',
       data: JSON.stringify(action.user)
     });
 
-    yield put(createStartSuccess());
+    yield put(requestSuccess());
   } catch (error) {
     yield put(setError(error));
   }
@@ -45,8 +44,6 @@ function* createStart(action) {
     const res = yield call(request, '/api/schedules/start', {
       method: 'POST'
     });
-
-    console.log(res);
 
     yield put(createStartSuccess(res));
   } catch (error) {

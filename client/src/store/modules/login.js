@@ -5,6 +5,7 @@
 import { fromJS } from 'immutable';
 
 // constants 정의
+export const SET_LOGIN = 'login/SET_LOGIN';
 export const GET_AUTH = 'login/GET_AUTH';
 export const CREATE_USER = 'login/CREATE_USER';
 export const REQUEST_SUCCESS = 'login/REQUEST_SUCCESS';
@@ -12,7 +13,7 @@ export const SET_ERROR = 'login/SET_ERROR';
 
 export const setLogin = () => {
     return {
-        type: ''
+        type: SET_LOGIN
     };
 }
 
@@ -62,6 +63,10 @@ const initialState = fromJS({
 // Login reducer
 export default function loginReducer (state = initialState, action) {
     switch (action.type) {
+        case SET_LOGIN:
+            return state
+                .set('loading', false)
+                .set('error', false);
         case GET_AUTH:
             return state
                 .set('loading', false)

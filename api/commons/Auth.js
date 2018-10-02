@@ -23,7 +23,6 @@ const isHasToken = (ctx, next) => {
       ctx.req.user = decoded;
       next();
     }).catch((err) => {
-      console.log(err);
       next(Errors.UNAUTHORIZED);
     });
   }

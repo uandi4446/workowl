@@ -25,7 +25,7 @@ module.exports = {
             const name = user.name;
 
             try {
-                let userData = await User.create({
+                await User.create({
                     identity: id,
                     password: pwd,
                     name: name

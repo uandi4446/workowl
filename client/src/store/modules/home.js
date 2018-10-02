@@ -48,10 +48,12 @@ const initialState = fromJS({
     loading: false,
     error: false,
     schedule: fromJS({
+      date: false,
       start: false,
       end: false,
       isOutside: false,
-      isHolyday: false
+      isHolyday: false,
+      isPlan: false,
     }),
     errDetail: fromJS({
         status: false,
@@ -70,7 +72,8 @@ export default function homeReducer (state = initialState, action) {
         case CREATE_START_SUCCESS:
             return state
                 .set('loading', true)
-                .setIn(['schedule', 'start'], moment(action.schedule.start).format('HH:mm'));
+                .setIn(['schedule', 'date'], action.schedule.date)
+                .setIn(['schedule', 'start'], action.schedule.start);
         case REQUEST_SUCCESS:
             return state
                 .set('loading', true);

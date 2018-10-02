@@ -21,7 +21,6 @@ class RegisterBox extends Component {
         if (this.state.pwd !== this.state.checkPassword) {
             alert('패스워드가 일치하지 않습니다. 다시 입력해 주세요.');
         } else {
-            alert('Register');
             this.props.onSubmit(this.state);
         }
         event.preventDefault();

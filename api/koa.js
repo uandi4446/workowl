@@ -2,6 +2,8 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const koaJwt = require('koa-jwt');
 const path = require('path');
+const moment = require('moment');
+moment.locale('ko');
 
 require('dotenv').config({ path: path.join(__dirname, './.env') });
 

@@ -21,6 +21,10 @@ class Login extends Component {
         };
     }
 
+    componentDidUpdate() {
+        this.props.setLogin();
+    }
+
     setContent(path) {
         switch (path) {
             case '/login':
@@ -29,6 +33,8 @@ class Login extends Component {
                 return 'Forgot';
             case '/register':
                 return 'Register';
+            case '/logout':
+                return 'Logout';
             default:
                 return '';
         }
@@ -42,6 +48,9 @@ class Login extends Component {
                 return <ResetPwdBox />;
             case 'Register':
                 return <RegisterBox onSubmit={this.handleRegister.bind(this)}/>;
+            case 'Logout':
+                localStorage.removeItem('access-token');
+                return <Redirect to='/login' />
             default:
                 return null;
         }
@@ -80,7 +89,6 @@ class Login extends Component {
 
         if (!this.props.loading) {
         } else if (this.state.content !== 'Login') {
-            this.props.setLogin();
             return <Redirect to='/login' />
         } else {
             return <Redirect to='/' />

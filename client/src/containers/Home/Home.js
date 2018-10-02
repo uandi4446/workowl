@@ -17,11 +17,12 @@ import WorkStatusExplainBox from '../../components/WorkStatusExplainBox';
 
 class Home extends Component {
   setWorkStatus() {
-    if (this.props.workEnd) {
+    console.log(this.props);
+    if (this.props.end) {
       return 'finish';
     } else if (this.props.isOutside) {
       return 'outside';
-    } else if (this.props.workStart) {
+    } else if (this.props.start) {
       return 'work';
     } else if (this.props.isHoliday) {
       return 'holiday';
@@ -50,6 +51,7 @@ class Home extends Component {
               <MyWorkStatusBox
                 status={workStatus}
                 workStart={this.props.start}
+                workEnd={this.props.end}
                 onSubmit={this.handleSubmit.bind(this)}
               />
               <WorkStatusExplainBox />
@@ -70,7 +72,7 @@ const mapStateToProps = (state) => ({
   start: state.home.getIn(['schedule', 'start']),
   end: state.home.getIn(['schedule', 'end']),
   isOutside: state.home.getIn(['schedule', 'isOutside']),
-  isHoliday: state.home.getIn(['schedule', 'isHoliday']),
+  isHoliday: state.home.getIn(['schedule', 'isHolyday']),
   isPlan: state.home.getIn(['schedule', 'isPlan'])
 });
 

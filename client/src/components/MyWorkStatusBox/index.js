@@ -83,10 +83,10 @@ class MyWorkStatusBox extends Component {
                 </div>
                 <div className="MyWorkStatus-hour">
                     <div className="MyWorkStatus-work left">
-                        <span>{!this.props.workStart? "":`(${this.props.workStart})`}</span>
+                        <span>{!this.props.workStart? "()":`(${this.props.workStart})`}</span>
                     </div>
                     <div className="MyWorkStatus-work right">
-                        <span>{!this.props.workEnd? "":`(${this.props.workEnd})`}</span>
+                        <span>{!this.props.workEnd? "()":`(${this.props.workEnd})`}</span>
                     </div>
                 </div>
             </div>

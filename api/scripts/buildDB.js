@@ -13,6 +13,8 @@ const syncDB = () => {
 
 syncDB().then(() => {
     console.log('Database Sync Complete.');
+    process.exit();
 }).catch((err) => {
     console.log('Database sync Error.', err);
+    process.exit(-1);
 });   

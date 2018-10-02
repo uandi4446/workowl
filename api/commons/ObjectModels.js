@@ -32,19 +32,22 @@ const Schedule = oInstance.define('schedule', {
         allowNull: false
     },
     start: {
-        type: ORM.DATE,
+        type: ORM.STRING
     },
     end: {
-        type: ORM.DATE
+        type: ORM.STRING
     },
     isOutside: {
-        type: ORM.BOOLEAN
+        type: ORM.BOOLEAN,
+        defaultValue: false
     },
     isHoliday: {
-        type: ORM.BOOLEAN
+        type: ORM.BOOLEAN,
+        defaultValue: false
     },
     isPlan: {
-        type: ORM.BOOLEAN
+        type: ORM.BOOLEAN,
+        defaultValue: false
     }
 });
 
@@ -70,7 +73,7 @@ Setting.belongsTo(User);
 const ObjectModels = {
     User,
     Schedule,
-    Setting
+    Setting,
 }
 
 module.exports = ObjectModels;

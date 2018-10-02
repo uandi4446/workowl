@@ -19,7 +19,7 @@ class App extends Component {
           <Route path="/register" component={Login} />
           <PrivateRoute path="/history" component={History} />
           <PrivateRoute path="/setup" component={WillWork} />
-          <PrivateRoute path="/logout" component={WillWork} />
+          <PrivateRoute path="/logout" component={Login} />
         </div>
       </Router>
     );
