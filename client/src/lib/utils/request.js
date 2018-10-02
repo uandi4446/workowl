@@ -28,6 +28,7 @@ export default async (url, options) => {
         return checkStatus(response);
     } catch (error) {
         let err = error.response.data.message;
+        console.log(err);
         throw { 
             status: err.status,
             code: err.code || '',

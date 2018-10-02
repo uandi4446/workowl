@@ -8,6 +8,8 @@ import AppTitle from '../../components/AppTtile';
 import LoginBox from '../../components/LoginBox/LoginBox.js';
 import ResetPwdBox from '../../components/LoginBox/ResetPwdBox.js';
 import RegisterBox from '../../components/LoginBox/RegisterBox.js';
+import AlertMessage from '../../components/AlertMessage';
+import setAlert from '../../lib/utils/alert';
 
 class Login extends Component {
     constructor(props) {
@@ -61,7 +63,6 @@ class Login extends Component {
 
     // handle actions
     handleLogin(user) {
-        console.log(user);
         this.props.getAuth(user);
     }
     handleRegister(user) {
@@ -75,12 +76,18 @@ class Login extends Component {
     render() {
         let boxContent = this.setBoxContent();
         let commentContent = this.setCommentContent();
+        let alert = null;
+
         if (!this.props.loading) {
         } else if (this.state.content !== 'Login') {
             this.props.setLogin();
             return <Redirect to='/login' />
         } else {
             return <Redirect to='/' />
+        }
+
+        if (this.props.error) {
+            alert = (<AlertMessage message={setAlert(this.props.errDetail)} />);
         }
 
         return (
@@ -90,6 +97,7 @@ class Login extends Component {
                     <div className={`${this.state.content}-panel`}>
                         <AppTitle content={this.state.content} />
                     </div>
+                    {alert}
                     {boxContent}
                     {commentContent}
                 </div>
@@ -100,7 +108,8 @@ class Login extends Component {
 
 const mapStateToProps = (state) => ({
     loading: state.login.get('loading'),
-    error: state.login.get('error')
+    error: state.login.get('error'),
+    errDetail: state.login.get('errDetail').toJS()
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -25,11 +25,21 @@ Errors.TEST = {
     message: 'Debugging'
 };
 
-Errors.Cdoes = {};
+Errors.Codes = {};
 
-Errors.Cdoes.FAILTOSAVE = {
+Errors.Codes.FAILTOSAVE = {
     code: 40001,
     message: 'Fail to save DB.'
+};
+
+Errors.Codes.NOCONTENTS = {
+    code: 40002,
+    message: 'There is no contents.'
+}
+
+Errors.Codes.FAILTOLOGIN = {
+    code: 40101,
+    message: 'Fail to login'
 };
 
 module.exports = Errors;

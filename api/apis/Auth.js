@@ -26,13 +26,15 @@ module.exports = {
                 }
             });
             if (!userData) {
-                IO.error(ctx, Errors.BADREQUEST);
+                IO.error(ctx, Errors.UNAUTHORIZED, Errors.Codes.FAILTOLOGIN);
             } else if (userData.password === pwd) {
                 const token = await Auth.signToken({ 
                     userId: userData.id,
                     name: userData.name
                 });
                 IO.send(ctx, { token: token });
+            } else if (userData.password !== pwd) {
+                IO.error(ctx, Errors.UNAUTHORIZED, Errors.Codes.FAILTOLOGIN);
             } else {
                 IO.error(ctx, Errors.BADREQUEST);
             }
