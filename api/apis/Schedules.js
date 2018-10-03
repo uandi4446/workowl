@@ -173,11 +173,16 @@ module.exports = {
 
       if (!schedule) {
         try {
-          schedule = await Setting.findOne({
+          const setting = await Setting.findOne({
             where: {
               userId: user.userId
             }, attributes: [ 'startTime', 'endTime' ]
           });
+
+          schedule = {
+            start: setting.startTime,
+            end: setting.endTime
+          }
         } catch (error) {
           console.log("find Setting Error: ", error);
           IO.error(ctx, Errors.BADREQUEST);

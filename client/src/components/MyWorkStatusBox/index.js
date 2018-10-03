@@ -49,16 +49,22 @@ class MyWorkStatusBox extends Component {
     }
 
     setProgress() {
-        let start = moment(this.props.plan.start, 'HH:mm');
-        let end = this.props.schedule.end?
-                    moment(this.props.schedule.end, 'HH:mm'):
-                    moment(this.props.plan.end, 'HH:mm');
-        let workTime = moment.duration(end.diff(start)).asMilliseconds();
-        let remainTime = moment.duration(end.diff(moment())).asMilliseconds();
-        let workPer = Math.round((1 - remainTime/workTime) * 100);
-        return {
-            width: `${workPer}%`
-        };
+        if (this.props.status === 'notWork' || this.props.status === 'holiday') {
+            return { width: '0%' };
+        } else if (this.props.status === 'finish') {
+            return { width : '100%' };
+        } else {
+            let start = moment(this.props.plan.start, 'HH:mm');
+            let end = this.props.schedule.end?
+                        moment(this.props.schedule.end, 'HH:mm'):
+                        moment(this.props.plan.end, 'HH:mm');
+            let workTime = moment.duration(end.diff(start)).asMilliseconds();
+            let remainTime = moment.duration(end.diff(moment())).asMilliseconds();
+            let workPer = Math.round((1 - remainTime/workTime) * 100);
+            return {
+                width: `${workPer}%`
+            };
+        }
     }
 
     // handle button click
