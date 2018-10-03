@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+// Reducer actions import
 import * as loginActions from '../../store/modules/login.js';
+import * as errorActions from '../../store/modules/error.js';
 
 import './Login.css';
 import AppTitle from '../../components/AppTtile';
@@ -9,7 +12,6 @@ import LoginBox from '../../components/LoginBox/LoginBox.js';
 import ResetPwdBox from '../../components/LoginBox/ResetPwdBox.js';
 import RegisterBox from '../../components/LoginBox/RegisterBox.js';
 import AlertMessage from '../../components/AlertMessage';
-import setAlert from '../../lib/utils/alert';
 
 class Login extends Component {
     constructor(props) {
@@ -19,6 +21,10 @@ class Login extends Component {
         this.state = {
             content: content
         };
+    }
+
+    componentDidMount() {
+        this.props.resetError();
     }
 
     componentDidUpdate() {
@@ -78,7 +84,9 @@ class Login extends Component {
         this.props.createUser({
             id: user.id,
             pwd: user.pwd,
-            name: user.name
+            name: user.name,
+            startTime: user.startTime,
+            endTime: user.endTime
         });
     }
 
@@ -95,7 +103,7 @@ class Login extends Component {
         }
 
         if (this.props.error) {
-            alert = (<AlertMessage message={setAlert(this.props.errDetail)} />);
+            alert = (<AlertMessage error={this.props.errDetail} />);
         }
 
         return (
@@ -116,14 +124,15 @@ class Login extends Component {
 
 const mapStateToProps = (state) => ({
     loading: state.login.get('loading'),
-    error: state.login.get('error'),
-    errDetail: state.login.get('errDetail').toJS()
+    error: state.error.get('error'),
+    errDetail: state.error.get('errDetail').toJS()
 });
 
 const mapDispatchToProps = (dispatch) => ({
     getAuth: (user) => dispatch(loginActions.getAuth(user)),
     createUser: (user) => dispatch(loginActions.createUser(user)),
-    setLogin: () => dispatch(loginActions.setLogin())
+    setLogin: () => dispatch(loginActions.setLogin()),
+    resetError: () => dispatch(errorActions.resetError())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

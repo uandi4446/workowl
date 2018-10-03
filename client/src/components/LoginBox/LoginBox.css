@@ -39,3 +39,7 @@
     line-height: 50px;
     padding: 0;
 }
+
+.LoginBox .input-group-text {
+    font-size: 14px;
+}

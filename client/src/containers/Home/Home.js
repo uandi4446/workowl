@@ -6,7 +6,9 @@
 */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 import * as homeActions from '../../store/modules/home.js';
+import * as errorActions from '../../store/modules/error.js';
 
 import './Home.css';
 
@@ -14,71 +16,127 @@ import Header from '../../components/Header';
 import MyWorkStatusBox from '../../components/MyWorkStatusBox';
 import TeamMemberWorkStatusBox from '../../components/TeamMemberWorkStatusBox';
 import WorkStatusExplainBox from '../../components/WorkStatusExplainBox';
+import AlertMessage from '../../components/AlertMessage';
 
 class Home extends Component {
-  setWorkStatus() {
-    console.log(this.props);
-    if (this.props.end) {
+  componentDidMount() {
+    this.props.resetError();
+    this.props.getTodayWork();
+    this.props.getTodayPlan();
+    this.props.getTeamTodayWork();
+  }
+
+  setWorkStatus(schedule, plan) {
+    if (!schedule && !plan) {
+      return 'notWork';
+    } else if (schedule.end) {
       return 'finish';
-    } else if (this.props.isOutside) {
+    } else if (schedule.isOutside) {
       return 'outside';
-    } else if (this.props.start) {
+    } else if (schedule.start) {
       return 'work';
-    } else if (this.props.isHoliday) {
+    } else if (schedule.isHoliday) {
+      return 'holiday';
+    } else if (plan.isHoliday) {
       return 'holiday';
     } else {
       return 'notWork';
     }
   }
 
-    handleSubmit(event) {
-      switch (event) {
-        case 'start':
-          this.props.workStart();
-          break;
-        default:
-          break;
-      }
+  setMemberWork(schedules, setting) {
+    let plan = schedules.filter(sch => sch.isPlan === true)[0];
+    let work = schedules.filter(sch => sch.isPlan === false)[0];
+    let startArr = [
+      work? work.start:false, 
+      plan? plan.start:false, 
+      setting? setting.startTime:false, 
+      '09:00'
+    ];
+    let endArr = [
+      work? work.end:false, 
+      plan? plan.end:false, 
+      setting? setting.endTime:false, 
+      '18:00'
+    ];
+
+    return {
+      status: this.setWorkStatus(work, plan),
+      start: startArr.find(start => start),
+      end: endArr.find(end => end)
+    }
+  }
+
+  handleSubmit(event) {
+    switch (event) {
+      case 'start':
+        this.props.workStart();
+        break;
+      case 'end':
+        this.props.workEnd();
+        break;
+      case 'outside':
+        alert('will work');
+        break;
+      default:
+        break;
+    }
+  }
+
+  render() {
+    let alert = null;
+
+    console.log(this.props.error);
+    if (this.props.error) {
+      alert = <AlertMessage error={this.props.errDetail} />
+    } else {
+      alert = null;
     }
 
-    render() {
-        let workStatus = this.setWorkStatus();
-
-        return (
-          <div>
-            <Header />
-            <div className="container">
-              <MyWorkStatusBox
-                status={workStatus}
-                workStart={this.props.start}
-                workEnd={this.props.end}
-                onSubmit={this.handleSubmit.bind(this)}
+    return (
+      <div>
+        <Header />
+        <div className="container">
+          {alert}
+          <MyWorkStatusBox
+            status={this.setWorkStatus(this.props.schedule, this.props.plan)}
+            name={this.props.name}
+            schedule={this.props.schedule}
+            plan={this.props.plan}
+            onSubmit={this.handleSubmit.bind(this)}
+          />
+          <WorkStatusExplainBox />
+          <div className="Home-memberRow">
+            {this.props.users.map((user) => 
+              <TeamMemberWorkStatusBox key={user.id}
+                name={user.name}
+                schedule={this.setMemberWork(user.schedule, user.setting)}
               />
-              <WorkStatusExplainBox />
-              <div className="Home-memberRow">
-                <TeamMemberWorkStatusBox />
-                <TeamMemberWorkStatusBox />
-                <TeamMemberWorkStatusBox />
-              </div>
-            </div>
+            )}
           </div>
-        )
-    }
+        </div>
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.home.get('loading'),
-  error: state.home.get('error'),
-  start: state.home.getIn(['schedule', 'start']),
-  end: state.home.getIn(['schedule', 'end']),
-  isOutside: state.home.getIn(['schedule', 'isOutside']),
-  isHoliday: state.home.getIn(['schedule', 'isHolyday']),
-  isPlan: state.home.getIn(['schedule', 'isPlan'])
+  error: state.error.get('error'),
+  errDetail: state.error.get('errDetail'),
+  name: jwtDecode(localStorage.getItem('access-token')).userName,
+  schedule: state.home.get('schedule'),
+  users: state.home.get('users')? state.home.get('users'):[],
+  plan: state.home.get('plan')
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  resetError: () => dispatch(errorActions.resetError()),
+  setHome: () => dispatch(homeActions.setHome()),
   workStart: () => dispatch(homeActions.createStart()),
-  setHome: () => dispatch(homeActions.setHome())
-})
+  workEnd: () => dispatch(homeActions.createEnd()),
+  getTodayWork: () => dispatch(homeActions.readTodayWork()),
+  getTodayPlan: () => dispatch(homeActions.readTodayPlan()),
+  getTeamTodayWork: () => dispatch(homeActions.readTeamTodayWork())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -16,7 +16,6 @@ class LoginBox extends Component {
     }
 
     onSubmit(event) {
-        alert('Login');
         this.props.onSubmit(this.state);
         event.preventDefault();
     }

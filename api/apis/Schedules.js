@@ -1,5 +1,6 @@
 const moment = require('moment-timezone');
 const Op = require('sequelize').Op;
+const Literal = require('sequelize').literal;
 
 const {
   ObjectModels,
@@ -21,6 +22,21 @@ module.exports = {
 
       const todayDate = moment().tz('Asia/Seoul').format(dateFormat);
       const start = moment().tz('Asia/Seoul').format(timeFormat);
+
+      try {
+        const schedule = await Schedule.findAll({
+          where: {
+            date: todayDate,
+            userId: user.userId
+          }
+        });
+
+        if (schedule.length() > 0) {
+          throw Errors.Codes.EXISTEDCONTENTS;
+        }
+      } catch (error) {
+        IO.error(ctx, Errors.BADREQUEST, error);
+      }
 
       try {
         const startData = await Schedule.create({
@@ -68,7 +84,7 @@ module.exports = {
             end: end
           });
 
-          IO.send(ctx);
+          IO.send(ctx, schedule);
         }
       } catch (error) {
         console.log(error);
@@ -119,9 +135,11 @@ module.exports = {
 
       try {
         const schedule = await Schedule.findOne({
-          userId: user.userId,
-          date: todayDate,
-          isPlan: false,
+          where: {
+            userId: user.userId,
+            date: todayDate,
+            isPlan: false,
+          }
         });
 
         IO.send(ctx, schedule);
@@ -142,9 +160,11 @@ module.exports = {
 
       try {
         var schedule = await Schedule.findOne({
-          userId: user.userId,
-          date: todayDate,
-          isPlan: true,
+          where: {
+            userId: user.userId,
+            date: todayDate,
+            isPlan: true,
+          }
         });
       } catch (error) {
         console.log(error);
@@ -166,8 +186,8 @@ module.exports = {
 
       if (!schedule) {
         schedule = {
-          start: startTime,
-          end: endTime
+          start: '09:00',
+          end: '18:00'
         };
       }
 
@@ -178,26 +198,35 @@ module.exports = {
     path: '/api/schedule/team',
     method: 'get',
     action: async (ctx, next) => {
-      const { Schedule, User } = ObjectModels;
+      const { Schedule, User, Setting } = ObjectModels;
 
       const user = ctx.state.user;
       const todayDate = moment().tz('Asia/Seoul').format(dateFormat);
 
       try {
-        const schedules = await Schedule.findAll({
+        const members = await User.findAll({
           where: {
-            userId: {
+            id: {
               [Op.ne]: user.userId
+            }
+          },
+          attributes: ['id', 'name'],
+          include: [{
+            model: Schedule,
+            as: 'schedule',
+            where: {
+              date: todayDate,
             },
-            date: todayDate,
-            isPlan: false
-          }, include: [{
-            model: User,
-            attributes: [ 'id', 'name' ]
-          }]
+            required: false
+          }, {
+            model: Setting,
+            as: "setting",
+            attributes: ['startTime', 'endTime']
+          }],
+          order: Literal('schedule.updatedAt DESC')
         });
 
-        IO.send(ctx, schedules);
+        IO.send(ctx, members);
       } catch (error) {
         console.log(error);
         IO.error(ctx, Errors.BADREQUEST);

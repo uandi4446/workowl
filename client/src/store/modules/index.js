@@ -8,8 +8,10 @@ import { combineReducers } from 'redux';
 
 import login from './login.js';
 import home from './home.js';
+import error from './error.js';
 
 export default combineReducers({
     login,
-    home
+    home,
+    error
 });

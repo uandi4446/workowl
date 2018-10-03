@@ -8,10 +8,13 @@ class RegisterBox extends Component {
         id: '',
         name: '',
         pwd: '',
-        checkPassword: ''
+        checkPassword: '',
+        startTime: '09:00',
+        endTime: '18:00'
     };
 
     handleChange(event) {
+        console.log(this.state);
         this.setState({
             [event.target.name]: event.target.value
         });
@@ -46,6 +49,28 @@ class RegisterBox extends Component {
                     </div>
                     <div className="form-group">
                         <input type="text" className="form-control" name="name" placeholder="사용자 이름" onChange={this.handleChange.bind(this)} />
+                    </div>
+                    <div className="form-group">
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">기본출근시간</span>
+                            </div>
+                            <input type="time" name="startTime" className="form-control" 
+                                value={this.state.startTime}
+                                onChange={this.handleChange.bind(this)}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">기본퇴근시간</span>
+                            </div>
+                            <input type="time" name="endTime" className="form-control" 
+                                value={this.state.endTime}
+                                onChange={this.handleChange.bind(this)}
+                            />
+                        </div>
                     </div>
                     <PrimaryButton type="submit" title="회원가입" onClick={this.onSubmit.bind(this)} />
                 </form>

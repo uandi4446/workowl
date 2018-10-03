@@ -3,6 +3,8 @@
 * 현재 상태에 대한 안내 메시지 : 출근 전. 일하는 중. 퇴근 처리. 외근. 휴가. 반차?
 * notWork / work / finish / outside / holiday
 * 퇴근 까지 남은 시간 & 프로그레스 바
+* > 퇴근 까지 남은 시간 프로그레스 바는 퇴근까지 남은시간 / 하루 근무시간 으로 한다.
+* > 하루 근무시간은 예정 출근 시간을 기준으로 한다.
 * 출근 처리 버튼
 * 퇴근 처리 버튼
 * 외근 버튼
@@ -12,6 +14,7 @@
 */
 
 import React, { Component } from 'react';
+import moment from 'moment';
 import './MyWorkStatusBox.css';
 
 import PrimaryButton from '../Button/PrimaryButton.js';
@@ -20,6 +23,14 @@ import RelaxButton from '../Button/RelaxButton.js';
 import StatusIcon from '../StatusIcon';
 
 class MyWorkStatusBox extends Component {
+    constructor(props) {
+        super(props);
+        moment.locale('ko', {
+            weekdays: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
+            weekdaysShort: ["일","월","화","수","목","금","토"]
+        });
+    }
+
     setStatus() {
         switch (this.props.status) {
             case 'notWork':
@@ -37,9 +48,30 @@ class MyWorkStatusBox extends Component {
         }
     }
 
+    setProgress() {
+        let start = moment(this.props.plan.start, 'HH:mm');
+        let end = this.props.schedule.end?
+                    moment(this.props.schedule.end, 'HH:mm'):
+                    moment(this.props.plan.end, 'HH:mm');
+        let workTime = moment.duration(end.diff(start)).asMilliseconds();
+        let remainTime = moment.duration(end.diff(moment())).asMilliseconds();
+        let workPer = Math.round((1 - remainTime/workTime) * 100);
+        return {
+            width: `${workPer}%`
+        };
+    }
+
     // handle button click
     onStartSubmit(event) {
         this.props.onSubmit('start');
+        event.preventDefault();
+    }
+    onEndSubmit(event) {
+        this.props.onSubmit('end');
+        event.preventDefault();
+    }
+    onOutSubmit(event) {
+        this.props.onSubmit('outside');
         event.preventDefault();
     }
 
@@ -47,46 +79,56 @@ class MyWorkStatusBox extends Component {
         let status = this.setStatus();
         let startBtn = this.props.status === 'notWork'? false:true;
         let endBtn = this.props.status === 'work'? false:true;
+        let outBtn = this.props.status === 'finish'? true:false;
+        let progressStyle = this.setProgress();
 
         return (
             <div className="MyWorkStatusBox">
                 <div className="textleft">
                     <StatusIcon status={this.props.status} size="small"/>
-                    <div className="MyWorkStatusBox-name">{this.props.name}님</div>
+                    <div className="MyWorkStatusBox-name">{this.props.name}님 {`(${moment().format('YYYY-MM-DD. ddd')})`}</div>
                 </div>
                 <h2>{status}</h2>
                 <div className="MyWorkStatus-row">
                     <div className="MyWorkStatus left">
                         <PrimaryButton title="출근" 
-                            name="start"
                             disabled={startBtn} 
                             onClick={this.onStartSubmit.bind(this)}
                         />
                     </div>
                     <div className="MyWorkStatus center">
-                        <NormalButton title="외근" />
+                        <NormalButton title="외근" 
+                            disabled={outBtn}
+                            onClick={this.onOutSubmit.bind(this)}
+                        />
                     </div>
                     <div className="MyWorkStatus right">
-                        <RelaxButton title="퇴근" disabled={endBtn} />
+                        <RelaxButton title="퇴근" 
+                            disabled={endBtn} 
+                            onClick={this.onEndSubmit.bind(this)}
+                        />
                     </div>
                 </div>
                 <div className="progress">
-                    <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{width: "10%"}}></div>
-                </div>
-                <div className="MyWorkStatus-hour">
-                    <div className="MyWorkStatus-plan left">
-                        <span>{!this.props.planStart? "":this.props.planStart}</span>
-                    </div>
-                    <div className="MyWorkStatus-plan right">
-                        <span>{!this.props.planEnd? "":this.props.planEnd}</span>
-                    </div>
+                    <div className="progress-bar progress-bar-striped bg-info" 
+                        role="progressbar" 
+                        style={progressStyle}
+                    ></div>
                 </div>
                 <div className="MyWorkStatus-hour">
                     <div className="MyWorkStatus-work left">
-                        <span>{!this.props.workStart? "()":`(${this.props.workStart})`}</span>
+                        <span>{!this.props.schedule.start? "":this.props.schedule.start}</span>
                     </div>
                     <div className="MyWorkStatus-work right">
-                        <span>{!this.props.workEnd? "()":`(${this.props.workEnd})`}</span>
+                        <span>{!this.props.schedule.end? "":this.props.schedule.end}</span>
+                    </div>
+                </div>
+                <div className="MyWorkStatus-hour">
+                    <div className="MyWorkStatus-plan left">
+                        <span>{!this.props.plan.start? "()":`(${this.props.plan.start})`}</span>
+                    </div>
+                    <div className="MyWorkStatus-plan right">
+                        <span>{!this.props.plan.end? "()":`(${this.props.plan.end})`}</span>
                     </div>
                 </div>
             </div>
@@ -96,11 +138,15 @@ class MyWorkStatusBox extends Component {
 
 MyWorkStatusBox.defaultProps = {
     status: 'notWork',
-    planStart: '09:00',
-    planEnd: '18:00',
-    workStart: '09:00',
-    workEnd: '18:00',
-    name: '문혜선'
+    name: '문혜선',
+    schedule: {
+        start: '09:00',
+        end: '18:00' 
+    },
+    plan: {
+        start: '09:00',
+        end: '18:00'
+    }
 };
 
 export default MyWorkStatusBox;

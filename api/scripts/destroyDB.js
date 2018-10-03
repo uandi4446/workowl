@@ -6,7 +6,7 @@ const Promise = require('bluebird');
 const ObjectModels = require('../commons/ObjectModels.js');
 
 const destroyDB = () => {
-    return Promise.each(Object.keys(ObjectModels), (key) => {
+    return Promise.each(Object.keys(ObjectModels).reverse(), (key) => {
         return ObjectModels[key].drop();
     }, { concurrency: 1 });
 }

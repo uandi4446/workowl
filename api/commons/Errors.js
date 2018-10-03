@@ -37,6 +37,11 @@ Errors.Codes.NOCONTENTS = {
     message: 'There is no contents.'
 }
 
+Errors.Codes.EXISTEDCONTENTS = {
+    code: 40003,
+    message: 'The data is exsited.'
+}
+
 Errors.Codes.FAILTOLOGIN = {
     code: 40101,
     message: 'Fail to login'

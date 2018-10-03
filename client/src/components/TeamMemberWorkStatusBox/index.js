@@ -10,33 +10,20 @@ import './TeamMemberWorkStatusBox.css';
 import StatusIcon from '../StatusIcon';
 
 class TeamMemberWorkStatusBox extends Component {
-    setContent() {
-        switch (this.props.status) {
-            case 'notWork':
-            case 'work':
-            case 'finish':
-                return [ 
-                    <div className="TeamMemberWorkStatusBox-text">
-                        출근시간: {this.props.workStart? this.props.workStart:this.props.planStart}
-                    </div>,
-                    <div></div>,
-                    <div className="TeamMemberWorkStatusBox-text">
-                        퇴근시간: {this.props.workEnd? this.props.workEnd:this.props.planEnd}
-                    </div>
-                ];
-            default:
-                return null;
-        }
-    }
     render() {
-        let content = this.setContent();
         return (
             <div className="TeamMemberWorkStatusBox">
                 <div>
-                    <StatusIcon status={this.props.status} size="small"/>
+                    <StatusIcon status={this.props.schedule.status} size="small"/>
                     <div className="TeamMemberWorkStatusBox-text">{this.props.name}</div>
                 </div>
-                {content}
+                <div className="TeamMemberWorkStatusBox-text">
+                    출근시간: {this.props.schedule.start}
+                </div>
+                <div></div>
+                <div className="TeamMemberWorkStatusBox-text">
+                    퇴근시간: {this.props.schedule.end}
+                </div>
             </div>
         );
     }
@@ -46,7 +33,8 @@ TeamMemberWorkStatusBox.defaultProps = {
     name: 'bonbon42',
     status: 'work',
     planStart: '09:00',
-    planEnd: '18:00'
+    planEnd: '18:00',
+    key: 1
 
 }
 

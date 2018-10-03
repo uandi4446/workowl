@@ -9,7 +9,7 @@ module.exports = {
         path: '/api/users',
         method: 'post',
         action: async (ctx, next) => {
-            const { User } = ObjectModels;
+            const { User, Setting } = ObjectModels;
 
             const user = ctx.request.body;
             console.log(ctx.request);
@@ -23,18 +23,26 @@ module.exports = {
                         .digest('hex')
                         .toUpperCase();
             const name = user.name;
+            const startTime = user.startTime;
+            const endTime = user.endTime;
 
             try {
-                await User.create({
+                const userData = await User.create({
                     identity: id,
                     password: pwd,
-                    name: name
+                    name: name,
+                    setting: {
+                        startTime: startTime,
+                        endTime: endTime
+                    }
+                }, {
+                    include: [ Setting ]
                 });
-
-                IO.send(ctx);
             } catch (error) {
                 IO.error(ctx, Errors.BADREQUEST, error);
             }
+
+            IO.send(ctx);
         }
     }
 }
