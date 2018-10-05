@@ -7,4 +7,5 @@ Workowl은 웹 기반의 **출퇴근 기록 시스템**입니다.
 기존에 Docker를 이용 중이신 서버가 있다면 **Dockerfile과 docker-compose 파일**을 이용하여 서비스를 오픈할 수 있습니다.
 #### 1-1. Git clone
 ```git
-git clone 
+git clone https://github.com/uandi4446/workowl.git
+```
