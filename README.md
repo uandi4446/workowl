@@ -1,4 +1,6 @@
 # Workowl
+Workowl is a **fun web service to record your office hours**.
+When you go to your work and leave the office, you can click button and record the exact time.
 Workowl은 웹 기반의 **출퇴근 기록 시스템**입니다.
 
 유연근무제를 시행하게 되면서, 서로 다른 근무 시간을 가진 팀원들 끼리 업무시간을 공유할 목적으로 개발하게 되었습니다.
