@@ -13,7 +13,37 @@ Workowl은 웹 기반의 **출퇴근 기록 시스템**입니다.
 ```git
 git clone https://github.com/uandi4446/workowl.git
 ```
-
+#### 1-2. DB 환경파일 생성
+```git
+cd workowl  
+touch db.env  
+  
+// db.env 내 아래 내용 추가  
+MYSQL_ROOT_PASSWORD=[DB 루트 비밀번호]  
+MYSQL_DATABASE=Workowl // 변경 가능  
+MYSQL_USER=[DB 접근용 계정명]
+MYSQL_PASSWORD=[MYSQL_USER의 패스워드]
+```  
+#### 1-3. Docker Image 및 Container 생성
+```git
+docker-compose up -d --build
+```  
+#### 1-4. 초기 DB 테이블 생성
+```git  
+// workowl 컨테이너 내 접속  
+sudo docker-compose exec workowl /bin/bash  
+  
+// DB table 생성 스크립트 실행
+npm run deploy:db
+```  
+#### 1-5. Workowl 접속
+```git  
+http://localhost:3000
+```  
+***
+## 현재 개발 중  
+1. 출퇴근 이력 표시 페이지 추가  
+***
 ## 지금까지의 제공 기능
 1. 회원 가입 / 로그인
 2. 출퇴근 기록
@@ -23,8 +53,8 @@ git clone https://github.com/uandi4446/workowl.git
   - 퇴근 후 : 실제 출근/퇴근 시간 표시
  
 ## 작업 예정
-1. 초기 설정 파일 생성 스크립트 추
+1. 초기 설정 파일 생성 스크립트 추가
 2. Deploy 모드 추가
-3. 출퇴근 이력 표시 페이지 추가
+~~3. 출퇴근 이력 표시 페이지 추가~~
 4. 유연근무제 계획 등록 페이지 추가
 5. 개인 설정 페이지 추가
