@@ -1,0 +1,15 @@
+.MonthCheckRow {
+    display: inline;
+}
+
+.MonthCheckRow-left {
+    text-align: left;
+}
+
+.MonthCheckRow-center {
+    text-align: center;
+}
+
+.MonthCheckRow-right {
+    text-align: right;
+}

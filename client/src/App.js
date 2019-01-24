@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
+import moment from 'moment';
 import './App.css';
 
 // Devlepoed import
@@ -32,7 +34,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props => 
-      localStorage.getItem('access-token') ? (
+      verifyToken() ? (
         <Component {...props} />
       ) : ( 
         <Redirect to={{
@@ -43,3 +45,21 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     }
   />
 );
+
+const verifyToken = () => {
+  // token 이 없는 경우
+  if (!localStorage.getItem('access-token')) {
+    return false;
+  }
+
+  let token = jwtDecode(localStorage.getItem('access-token'));
+
+  // token 유효기간이 지난 경우
+  if (moment().isAfter(token.expiredTime)) {
+    localStorage.removeItem('access-token');
+    return false;
+  }
+
+  return true;
+
+}

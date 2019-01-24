@@ -237,5 +237,48 @@ module.exports = {
         IO.error(ctx, Errors.BADREQUEST);
       }
     }
+  },
+  'readMonthHistory': {
+    path: '/api/schedules/:id',
+    method: 'post',
+    action: async (ctx, next) => {
+      const { Schedule, User, Setting } = ObjectModels;
+
+      const user = ctx.state.user;
+      const userId = ctx.params.id;
+      const date = moment(ctx.request.body.date);
+
+      if (parseInt(user.userId) !== parseInt(userId)) {
+        return IO.error(ctx, Errors.UNAUTHORIZED, Errors.Codes.NOTYOURDATA);
+      }
+      
+      try {
+        const member = await User.findById(userId, {
+          attributes: ['id', 'name'],
+          include: [{
+            model: Schedule,
+            as: 'schedule',
+            where: {
+              date: {
+                [Op.and]: {
+                  [Op.gte]: date.startOf('month').format(dateFormat),
+                  [Op.lte]: date.endOf('month').format(dateFormat)
+                }
+              }
+            },
+            required: false
+          }, {
+            model: Setting,
+            as: "setting",
+            attributes: ['startTime', 'endTime']
+          }],
+        });
+
+        IO.send(ctx, member);
+      } catch (error) {
+        console.log(error);
+        IO.error(ctx, Errors.BADREQUEST);
+      }
+    }
   }
 }

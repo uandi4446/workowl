@@ -9,9 +9,11 @@ import { combineReducers } from 'redux';
 import login from './login.js';
 import home from './home.js';
 import error from './error.js';
+import history from './history.js';
 
 export default combineReducers({
     login,
     home,
-    error
+    error,
+    history
 });

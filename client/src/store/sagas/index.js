@@ -22,6 +22,10 @@ import {
   readedTodayPlan,
   readedTeamTodayWork,
 } from '../modules/home.js';
+import {
+  READ_HISTORY,
+  readHistorySuccess
+} from '../modules/history.js';
 import { setError } from '../modules/error.js';
 
 import request from '../../lib/utils/request.js';
@@ -110,6 +114,21 @@ function* getTeamTodayWork(action) {
   }
 }
 
+function* getHistory(action) {
+  try {
+    let data = {
+      date: action.date
+    }
+    const res = yield call(request, `/api/schedules/${action.userId}`, {
+      method: 'POST',
+      data: JSON.stringify(data)
+    });
+    yield put(readHistorySuccess(res));
+  } catch (error) {
+    yield put(setError(error));
+  }
+}
+
 function* sagas() {
   yield takeLatest(GET_AUTH, getAuth);
   yield takeLatest(CREATE_USER, createUser);
@@ -118,6 +137,7 @@ function* sagas() {
   yield takeEvery(READ_TODAY_WORK, getTodayWork);
   yield takeEvery(READ_TODAY_PLAN, getTodayPlan);
   yield takeEvery(READ_TEAM_TODAY_WORK, getTeamTodayWork);
+  yield takeEvery(READ_HISTORY, getHistory);
 }
 
 export default sagas;

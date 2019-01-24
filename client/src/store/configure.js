@@ -6,7 +6,7 @@ import sagas from './sagas';
 
 const configure = () => {
     // using redux-devtools : chrome extension
-    const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+    //const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
     const sagaMiddleware = createSagaMiddleware();
 
@@ -15,7 +15,7 @@ const configure = () => {
         modules,
         compose(
             applyMiddleware(...middlware),
-            devTools
+            //devTools
         )
     );
 
